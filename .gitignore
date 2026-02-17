@@ -1,0 +1,47 @@
+# ==============================
+# CREDENTIALS & CONFIG (CRITICAL)
+# ==============================
+includes/config.php
+includes/db.php
+.env
+*.env
+
+# ==============================
+# DEPENDENCIES (auto-reinstalled)
+# ==============================
+vendor/
+node_modules/
+
+# ==============================
+# IMAGES (too large for GitHub)
+# ==============================
+images/
+
+# ==============================
+# SETUP & MIGRATION SCRIPTS
+# (sensitive / one-time use)
+# ==============================
+setup_mongodb.php
+migrate_mysql_to_mongodb.php
+install.sh
+
+# ==============================
+# OS JUNK
+# ==============================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==============================
+# IDE FILES
+# ==============================
+.vscode/
+.idea/
+
+# ==============================
+# LOGS & TEMP
+# ==============================
+*.log
+error_log
+*.tmp
+cache/

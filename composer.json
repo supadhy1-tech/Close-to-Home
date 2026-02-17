@@ -1,0 +1,18 @@
+{
+    "name": "close-to-saginaw/assisted-living",
+    "description": "Close to Saginaw Assisted Living Website with MongoDB",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "mongodb/mongodb": "^1.17",
+        "phpmailer/phpmailer": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}

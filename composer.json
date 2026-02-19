@@ -3,7 +3,7 @@
     "description": "Close to Saginaw Assisted Living Website with MongoDB",
     "type": "project",
     "require": {
-        "php": ">=7.4",
+        "php": "^8.2",
         "mongodb/mongodb": "^1.17",
         "phpmailer/phpmailer": "^7.0"
     },

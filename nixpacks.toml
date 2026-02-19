@@ -1,8 +1,16 @@
 [phases.setup]
-nixPkgs = ["php82", "php82Extensions.mongodb"]
-
-[phases.install]
-cmds = ["composer install --no-dev --optimize-autoloader"]
+nixPkgs = ["php82"]
 
 [start]
 cmd = "php -S 0.0.0.0:$PORT"
+```
+
+Click **Commit changes** and wait for Railway to redeploy.
+
+---
+
+## Also Try This Alternative — Use a `Procfile` Instead
+
+If `nixpacks.toml` keeps causing issues, delete it and instead create a file called `Procfile` (no extension) with this single line:
+```
+web: php -S 0.0.0.0:$PORT

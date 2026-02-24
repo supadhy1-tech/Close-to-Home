@@ -25,5 +25,7 @@ WORKDIR /var/www/html
 
 # Run composer install
 RUN composer install --optimize-autoloader --no-scripts --no-interaction
+RUN composer update --no-scripts --no-interaction --ignore-platform-reqs && \
+    composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-reqs
 
 EXPOSE 80

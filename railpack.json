@@ -1,0 +1,11 @@
+{
+    "phases": {
+        "install": {
+            "aptPackages": ["libssl-dev"],
+            "commands": [
+                "pecl install mongodb",
+                "docker-php-ext-enable mongodb"
+            ]
+        }
+    }
+}

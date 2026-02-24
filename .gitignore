@@ -1,7 +1,7 @@
 # ==============================
 # CREDENTIALS & CONFIG (CRITICAL)
 # ==============================
-includes/config.php
+
 includes/db.php
 .env
 *.env
@@ -15,7 +15,7 @@ node_modules/
 # ==============================
 # IMAGES (too large for GitHub)
 # ==============================
-images/
+
 
 # ==============================
 # SETUP & MIGRATION SCRIPTS

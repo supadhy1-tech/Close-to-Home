@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     curl
 
 # Install MongoDB PHP extension
-RUN pecl install mongodb && docker-php-ext-enable mongodb
+RUN pecl install mongodb-1.21.1 && docker-php-ext-enable mongodb
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -23,9 +23,7 @@ COPY . /var/www/html/
 # Set working directory
 WORKDIR /var/www/html
 
-# Run composer install
-RUN composer install --optimize-autoloader --no-scripts --no-interaction
-RUN composer update --no-scripts --no-interaction --ignore-platform-reqs && \
-    composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-reqs
+# Install PHP dependencies
+RUN composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-reqs
 
 EXPOSE 80

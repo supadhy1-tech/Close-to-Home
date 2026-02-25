@@ -3,27 +3,29 @@ FROM php:8.2-apache
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     libssl-dev \
-    pkg-config \
-    && rm -rf /var/lib/apt/lists/*
+    unzip \
+    zip \
+    git \
+    curl
 
 # Install MongoDB PHP extension
-RUN pecl install mongodb && \
-    docker-php-ext-enable mongodb
+RUN pecl install mongodb && docker-php-ext-enable mongodb
 
-# Install composer
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Set working directory
-WORKDIR /var/www/html
-
-# Copy project files
-COPY . .
-
-# Install PHP dependencies
-RUN composer update --no-dev --optimize-autoloader --ignore-platform-reqs
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html
+# Copy project files
+COPY . /var/www/html/
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Run composer install
+RUN composer install --optimize-autoloader --no-scripts --no-interaction
+RUN composer update --no-scripts --no-interaction --ignore-platform-reqs && \
+    composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-reqs
+
+EXPOSE 80

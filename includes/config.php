@@ -5,15 +5,25 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use MongoDB\Client;
 use MongoDB\Driver\ServerApi;
 
-// MongoDB Atlas Connection String
-define('MONGODB_URI', 'mongodb+srv://hari1:hari1@cluster0.a96iriq.mongodb.net/?appName=Cluster0');
-define('DB_NAME', 'close_to_saginaw');
+// Load .env file for local development
+if (file_exists(__DIR__ . '/../.env')) {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+    $dotenv->load();
+}
+
+// MongoDB Atlas Connection String - using environment variables
+define('MONGODB_URI', $_ENV['MONGODB_URI'] ?? getenv('MONGODB_URI') ?? '');
+define('DB_NAME', $_ENV['DB_NAME'] ?? getenv('DB_NAME') ?? 'close_to_saginaw');
 
 // Global MongoDB client and database
 $mongoClient = null;
 $db = null;
 
 try {
+    if (empty(MONGODB_URI)) {
+        die("MongoDB URI is not set. Please check your environment variables.");
+    }
+
     // Specify Stable API version 1
     $apiVersion = new ServerApi(ServerApi::V1);
     
@@ -85,8 +95,12 @@ function getMongoClient() {
     static $client = null;
     
     if ($client === null) {
-        // Your MongoDB Atlas connection string
-        $uri = "mongodb+srv://hari1:hari1@cluster0.a96iriq.mongodb.net/?appName=Cluster0";
+        // Read URI from environment variable
+        $uri = $_ENV['MONGODB_URI'] ?? getenv('MONGODB_URI') ?? '';
+
+        if (empty($uri)) {
+            die("MongoDB URI is not set. Please check your environment variables.");
+        }
         
         // Specify Stable API version 1
         $apiVersion = new ServerApi(ServerApi::V1);
@@ -108,7 +122,8 @@ function getMongoClient() {
 
 function getDatabase() {
     $client = getMongoClient();
-    return $client->selectDatabase('close_to_saginaw'); // Your database name
+    $dbName = $_ENV['DB_NAME'] ?? getenv('DB_NAME') ?? 'close_to_saginaw';
+    return $client->selectDatabase($dbName);
 }
 
 function getCollection($collectionName) {
@@ -162,11 +177,6 @@ function initializeMongoDBIndexes() {
         return false;
     }
 }
-
-// DO NOT auto-call initializeMongoDBIndexes() here
-// It will be called once from process_tour.php on first booking
-// Or you can call it manually by uncommenting the line below and loading this file once:
-// initializeMongoDBIndexes();
 
 // Set default timezone
 date_default_timezone_set('America/Detroit');

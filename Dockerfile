@@ -20,7 +20,7 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install PHP dependencies
-RUN composer update --no-dev --optimize-autoloader
+RUN composer update --no-dev --optimize-autoloader --ignore-platform-reqs
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
